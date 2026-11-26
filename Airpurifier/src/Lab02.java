@@ -14,17 +14,21 @@ class AirPurifier{
     static int Mini = 10000;
 
     //Instance methods
-    void turnOn() { //มีหน้าที่เปิดเครื่อง ไม่มี input และ output
+    void turnOn() {
         power = true;
         IO.println("Power of "+model+serialNo+" is on");
     }
-    void turnOff() { //มีหน้าที่ปิดเครื่อง ไม่มี input และ output
+    void turnOff() {
         power = false;
         IO.println("Power of "+model+serialNo+" is off");
     }
-    void setFanSpeed(int speed){ //มีหน้าที่ set ความเร็วของใบพัด มี input เป็นค่าที่ต้องการเปลี่ยน ไม่มี output
+    void setFanSpeed(int speed){
         if(!power){
             IO.println(model+serialNo+" is still off");
+            return;
+        }
+        if(speed < 0){
+            IO.println("please set only positive value");
             return;
         }
         fanSpeed = speed;
@@ -32,12 +36,12 @@ class AirPurifier{
     }
 
     //Class methods
-    static int TotalAirpurifier(){ //มีหน้าที่แสดงและคืนค่าเป็นจำนวน airpurifier ทั้งหมดที่มี ไม่มี input มี output เป็นจำนวน airpurifier
+    static int TotalAirpurifier(){
         IO.println("Total amount of air purifier is "+modelCount);
         return modelCount;
     }
 
-    static int Totalspend(){ //มีหน้าที่คำนวณจำนวนเงินที่เสียไปทั้งหมดในการซื้อ airpurifier ไม่มี input มี output เป็นจำนวนเงินทั้งหมด
+    static int Totalspend(){
             return (priceOfModel[0]*Pro) + (priceOfModel[1]*Air) + (priceOfModel[2]*Mini);
     }
 
@@ -83,7 +87,7 @@ public class Lab02{
         IO.println("Total spend for airpurifier is "+AirPurifier.Totalspend()+" baht");
 
         x.setFanSpeed(50);
-        y.setFanSpeed(100);
+        y.setFanSpeed(-100);
         z.setFanSpeed(150);
 
         x.turnOff();
